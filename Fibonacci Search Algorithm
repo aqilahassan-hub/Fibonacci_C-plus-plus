@@ -1,0 +1,69 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+void fbs21(int *ar21, int start, int end, int *fb21, int index, int item)
+{
+    int i;
+    int mid = start + fb21[index - 2];
+    
+    if(item == ar21[mid])
+    {
+        cout << "item found at index #" << mid;
+        return;
+    }
+    else if(item == ar21[start])
+    {
+        cout << "item found at index #" << start;
+        return;
+    }
+    else if(item == ar21[end])
+    {
+        cout << "item found at index #" << end;
+        return;
+    }
+    else if(mid == start || mid == end)
+    {
+        cout <<  "item not found #";
+        return;
+    }
+    else if(item > ar21[mid])
+    
+        fbs21(ar21, mid, end, fb21, index - 1, item);
+    
+    else
+    
+        fbs21(ar21, start, mid, fb21, index - 2, item);
+    
+}
+
+int main()
+{
+    int n, ar21[21] = {1, 2, 3, 4, 5, 7, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181, 6765};
+    int fb21[21];
+    fb21[0] = 0;
+    fb21[1] = 1;
+    int i = 1;
+    while(fb21[i] < 21)
+	{
+		i++;
+		fb21[i] = fb21[i - 1] + fb21[i - 2];
+	}
+    for(i = 1; fb21[i] < 21; )
+    {
+        i++;
+        fb21[i] = fb21[i - 1] + fb21[i - 2];
+    }
+    up:
+    cout << "enter element: ";
+    cin >> n;
+    fbs21(ar21, 0, 20, fb21, i, n);
+    
+    char ch;
+    cout<<"\n\n	Do you want to search more...enter choice(y/n)?";
+	cin>>ch;
+	if(ch == 'y' || ch == 'Y')
+		goto up;
+ 
+	return 0;
+
+}
